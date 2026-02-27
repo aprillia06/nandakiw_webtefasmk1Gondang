@@ -1266,4 +1266,13 @@
                     e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth' });
                     // Close mobile nav
-                    const collapse = document.getElementById('navb
+                    const collapse = document.getElementById('navbarNav');
+                    if (collapse.classList.contains('show')) {
+                        new bootstrap.Collapse(collapse).hide();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
