@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEFA SMKN 1 Gondang Nganjuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple-deep: #1a0030;
+            --purple-mid: #4a0080;
+            --purple-bright: #8b00ff;
+            --purple-glow: #b44dff;
+            --purple-light: #d580ff;
+            --gold: #c9a227;
+            --gold-light: #f0c84a;
+            --black-pure: #000000;
+            --black-deep: #050508;
+            --black-card: #0d0d1a;
+            --black-glass: rgba(10, 5, 20, 0.85);
+            --text-primary: #f0e8ff;
+            --text-muted: #a090c0;
+            --border-glow: rgba(138, 0, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--black-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--black-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--purple-bright); border-radius: 3px; }
+
+        /* ─── Cursor glow effect ─── */
+        .cursor-glow {
+            width: 20px; height: 20px;
+            background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+            position: fixed; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            mix-blend-mode: screen;
+        }
+
+        /* ─── Background Particles ─── */
+        #particles-bg {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--purple-glow);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* ─── NAVBAR ─── */
+        .navbar {
+            background: linear-gradient(180deg, rgba(0,0,0,0.98) 0%, rgba(5,2,15,0.95) 100%) !important;
+            border-bottom: 1px solid var(--border-glow);
+            backdrop-filter: blur(20px);
+            padding: 12px 0;
+            transition: all 0.4s ease;
+            position: fixed; width: 100%; z-index: 1000;
+        }
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(138,0,255,0.2);
+        }
+        .navbar-brand {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary) !important;
+            display: flex; align-items: center; gap: 12px;
+            letter-spacing: 0.05em;
+        }
+        .navbar-brand img {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+            filter: brightness(1.1);
+        }
+        .navbar-brand span {
+            color: #fff;
+        }
+        @supports (-webkit-background-clip: text) {
+            .navbar-brand span {
+                background: linear-gradient(135deg, #fff 30%, var(--purple-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+        .nav-link {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            font-size: 0.88rem;
+            color: var(--text-muted) !important;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 8px 16px !important;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute; bottom: 4px; left: 50%;
+            width: 0; height: 1px;
+            background: var(--purple-glow);
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--purple-glow);
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--purple-light) !important;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 70%;
+        }
+        .navbar-toggler {
+            border: 1px solid var(--border-glow);
+            padding: 6px 10px;
+        }
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        /* ─── HERO ─── */
+        .hero-section {
+            min-height: 100vh;
+            background: var(--black-deep);
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg-overlay {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 50%, rgba(74,0,128,0.35) 0%, transparent 70%),
+                radial-gradient(ellipse 100% 100% at 80% 80%, rgba(138,0,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 100% at 20% 20%, rgba(180,77,255,0.06) 0%, transparent 60%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(138,0,255,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(138,0,255,0.07) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        }
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        .hero-orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(74,0,128,0.4) 0%, transparent 70%);
+            top: -10%; left: -10%;
+            animation-delay: 0s;
+        }
+        .hero-orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(138,0,255,0.25) 0%, transparent 70%);
+            bottom: -5%; right: -5%;
+            animation-delay: -4s;
+        }
+        .hero-orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -2s;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-badge {
+            display: inline-block;
+            border: 1px solid var(--border-glow);
+            background: rgba(138,0,255,0.1);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--purple-light);
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.8s ease forwards;
+            opacity: 0;
+        }
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: #ffffff;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+        @supports (-webkit-background-clip: text) {
+            .hero-title {
+                background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 50%, var(--gold-light) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+        .hero-buttons {
+            display: flex; gap: 16px;
+            justify-content: center; flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+            opacity: 0;
+        }
+        .btn-primary-glow {
+            background: linear-gradient(135deg, var(--purple-mid), var(--purple-bright));
+            border: none;
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(138,0,255,0.4);
+        }
+        .btn-primary-glow::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--purple-bright), var(--purple-mid));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(138,0,255,0.6);
+            color: white;
+        }
+        .btn-primary-glow:hover::before { opacity: 1; }
+        .btn-outline-glow {
+            background: transparent;
+            border: 1px solid var(--border-glow);
+            color: var(--purple-light);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .btn-outline-glow:hover {
+            background: rgba(138,0,255,0.15);
+            border-color: var(--purple-glow);
+            box-shadow: 0 0 20px rgba(138,0,255,0.3);
+            color: var(--purple-light);
+            transform: translateY(-3px);
+        }
+        .hero-scroll-indicator {
+            position: absolute; bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            animation: fadeIn 1s 1s forwards; opacity: 0;
+        }
+        .scroll-line {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, var(--purple-glow), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.1); }
+        }
+
+        /* ─── SECTION BASE ─── */
+        section { position: relative; z-index: 1; }
+        .section-wrapper {
+            padding: 100px 0;
+            position: relative;
+        }
+        .section-title-block {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .section-eyebrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--purple-glow);
+            margin-bottom: 12px;
+        }
+        .section-heading {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        @supports (-webkit-background-clip: text) {
+            .section-heading {
+                background: linear-gradient(135deg, #ffffff, var(--purple-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+        }
+        .section-divider {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple-bright), transparent);
+            margin: 0 auto 20px;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ─── STATS BAR ─── */
+        .stats-section {
+            background: linear-gradient(180deg, var(--black-deep) 0%, var(--purple-deep) 50%, var(--black-deep) 100%);
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 60px 0;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--purple-light);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        @supports (-webkit-background-clip: text) {
+            .stat-number {
+                background: linear-gradient(135deg, var(--purple-light), var(--gold-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ─── VISI MISI ─── */
+        .visi-misi-section {
+            background: var(--black-deep);
+        }
+        .vm-card {
+            background: linear-gradient(135deg, var(--black-card) 0%, rgba(20,5,40,0.9) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 40px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .vm-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--purple-bright), transparent);
+        }
+        .vm-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple-glow);
+            box-shadow: 0 20px 60px rgba(138,0,255,0.2);
+        }
+        .vm-icon-wrap {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--purple-mid), var(--purple-bright));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(138,0,255,0.35);
+        }
+        .vm-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+        .vm-card p, .vm-card ol {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }
+        .vm-card ol { padding-left: 18px; }
+        .vm-card ol li { margin-bottom: 8px; }
+
+        /* ─── PROGRAM CARDS ─── */
+        .program-section {
+            background: linear-gradient(180deg, var(--black-deep) 0%, var(--purple-deep) 100%);
+        }
+        .program-card {
+            background: var(--black-glass);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 36px 28px;
+            text-align: center;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        .program-card::after {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(138,0,255,0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .program-card:hover::after { opacity: 1; }
+        .program-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-glow);
+            box-shadow: 0 24px 60px rgba(138,0,255,0.25);
+        }
+        .program-icon {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            position: relative;
+        }
+        .program-icon::after {
+            content: '';
+            position: absolute; inset: -2px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--purple-bright), var(--gold)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+        }
+        .program-icon-1 { background: linear-gradient(135deg, rgba(74,0,128,0.4), rgba(138,0,255,0.2)); color: var(--purple-light); }
+        .program-icon-2 { background: linear-gradient(135deg, rgba(0,60,30,0.4), rgba(0,180,80,0.2)); color: #5dffb0; }
+        .program-icon-3 { background: linear-gradient(135deg, rgba(100,80,0,0.4), rgba(201,162,39,0.2)); color: var(--gold-light); }
+        .program-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+        .program-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        /* ─── JURUSAN ─── */
+        .jurusan-section {
+            background: var(--black-deep);
+            padding: 100px 0;
+        }
+        .jurusan-category-header {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 36px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-glow);
+        }
+        .jurusan-category-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        .cat-tech { background: linear-gradient(135deg, var(--purple-mid), var(--purple-bright)); }
+        .cat-agri { background: linear-gradient(135deg, #0d4a1f, #22c55e); }
+        .jurusan-category-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem; font-weight: 700;
+            color: white;
+        }
+        .jurusan-card {
+            background: linear-gradient(160deg, #0d0a1a 0%, #100520 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .jurusan-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-glow);
+            box-shadow: 0 20px 60px rgba(138,0,255,0.25);
+        }
+        .jurusan-card-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            filter: brightness(0.7) saturate(0.8);
+            transition: all 0.4s ease;
+        }
+        .jurusan-card:hover .jurusan-card-img {
+            filter: brightness(0.85) saturate(1.1);
+            transform: scale(1.04);
+        }
+        .jurusan-card-img-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+        .jurusan-card-img-wrap::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(13,10,26,0.8) 0%, transparent 60%);
+        }
+        .jurusan-card-body {
+            padding: 24px;
+        }
+        .jurusan-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--purple-light);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .jurusan-card-text {
+            color: var(--text-muted);
+            font-size: 0.83rem;
+            line-height: 1.7;
+        }
+        .jurusan-card-text strong { color: var(--text-primary); }
+
+        /* ─── GALERI ─── */
+        .galeri-section {
+            background: linear-gradient(180deg, var(--black-deep) 0%, var(--purple-deep) 50%, var(--black-deep) 100%);
+            padding: 100px 0;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid var(--border-glow);
+            cursor: pointer;
+            aspect-ratio: 3/4;
+        }
+        .gallery-item img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) saturate(0.8);
+            transition: all 0.5s ease;
+        }
+        .gallery-item:hover img {
+            filter: brightness(0.9) saturate(1.2);
+            transform: scale(1.06);
+        }
+        .gallery-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(74,0,128,0.6) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex; align-items: flex-end;
+            padding: 20px;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay span {
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+        }
+
+        /* ─── KONTAK ─── */
+        .kontak-section {
+            background: var(--black-deep);
+            padding: 100px 0;
+        }
+        .kontak-card {
+            background: linear-gradient(135deg, var(--black-card), rgba(20,5,40,0.9));
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .kontak-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple-bright), var(--gold), var(--purple-bright), transparent);
+        }
+        .kontak-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .kontak-subtitle {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 36px;
+        }
+        .kontak-item {
+            display: flex; align-items: flex-start; gap: 16px;
+            margin-bottom: 24px;
+        }
+        .kontak-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--purple-mid), var(--purple-bright));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(138,0,255,0.3);
+        }
+        .kontak-item-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            padding-top: 8px;
+        }
+        .kontak-item-text a {
+            color: var(--purple-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .kontak-item-text a:hover { color: white; }
+        .map-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 20px 60px rgba(138,0,255,0.15);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: linear-gradient(180deg, var(--black-deep) 0%, #000000 100%);
+            border-top: 1px solid var(--border-glow);
+            padding: 50px 0 30px;
+        }
+        .footer-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        @supports (-webkit-background-clip: text) {
+            .footer-brand {
+                background: linear-gradient(135deg, #fff, var(--purple-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+        .footer-desc {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.7;
+            max-width: 300px;
+        }
+        .footer-social a {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border-glow);
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+        .footer-social a:hover {
+            background: var(--purple-mid);
+            border-color: var(--purple-glow);
+            color: white;
+            box-shadow: 0 4px 16px rgba(138,0,255,0.3);
+            transform: translateY(-3px);
+        }
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            border-top: 1px solid rgba(138,0,255,0.1);
+            padding-top: 24px;
+            margin-top: 40px;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Reveal on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Shimmer on cards */
+        .shimmer-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+            transform: skewX(-20deg);
+            transition: none;
+        }
+        .shimmer-card:hover::after {
+            animation: shimmer 0.8s ease;
+        }
+        @keyframes shimmer {
+            from { left: -100%; }
+            to { left: 200%; }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .kontak-card {
+                padding: 30px 24px;
+            }
+            .hero-title { font-size: 2rem; }
+        }
+        @media (max-width: 480px) {
+            .stat-number { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Particles -->
+    <div id="particles-bg"></div>
+
+    <!-- ───── NAVBAR ───── -->
+    <nav class="navbar navbar-expand-lg" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="foto3.jpg" alt="Logo SMKN 1 Gondang">
+                <span>SMKN 1 Gondang</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#beranda">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#visi-misi">Visi & Misi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#program">Program TEFA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#jurusan">Unit TEFA</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ───── HERO ───── -->
+    <header id="beranda" class="hero-section">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+
+        <div class="hero-content">
+            <div class="hero-badge">✦ SMK Negeri 1 Gondang Nganjuk ✦</div>
+            <h1 class="hero-title">Teaching Factory<br>SMKN 1 Gondang</h1>
+            <p class="hero-subtitle">Mempersiapkan Generasi Terampil, Siap Kerja, dan Berwirausaha untuk Masa Depan Gemilang</p>
+            <div class="hero-buttons">
+                <a href="#jurusan" class="btn-primary-glow">Lihat Unit TEFA</a>
+                <a href="#program" class="btn-outline-glow">Tentang Program</a>
+            </div>
+        </div>
+
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </header>
+
+    <!-- ───── STATS ───── -->
+    <div class="stats-section">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-6 col-md-3 reveal">
+                    <div class="stat-item">
+                        <div class="stat-number">7+</div>
+                        <div class="stat-label">Unit Produksi TEFA</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal reveal-delay-1">
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Bidang Keahlian</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal reveal-delay-2">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Pembelajaran Riil</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 reveal reveal-delay-3">
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Peluang Karier</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───── VISI MISI ───── -->
+    <section id="visi-misi" class="visi-misi-section section-wrapper">
+        <div class="container">
+            <div class="section-title-block reveal">
+                <div class="section-eyebrow">Fondasi Kami</div>
+                <h2 class="section-heading">Visi & Misi TEFA</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 reveal">
+                    <div class="vm-card shimmer-card">
+                        <div class="vm-icon-wrap">
+                            <i class="fas fa-bullseye" style="color:white"></i>
+                        </div>
+                        <h3 class="vm-card-title">Visi</h3>
+                        <p>Menjadi pusat pengembangan kompetensi kejuruan yang berorientasi pada industri dan kewirausahaan untuk menghasilkan lulusan berkelas dunia.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 reveal reveal-delay-1">
+                    <div class="vm-card shimmer-card">
+                        <div class="vm-icon-wrap" style="background: linear-gradient(135deg, #0d4a1f, #22c55e);">
+                            <i class="fas fa-list-check" style="color:white"></i>
+                        </div>
+                        <h3 class="vm-card-title">Misi</h3>
+                        <ol>
+                            <li>Menyelenggarakan pembelajaran berbasis produksi dan layanan jasa.</li>
+                            <li>Mengembangkan kemitraan dengan industri dan dunia usaha.</li>
+                            <li>Menghasilkan lulusan yang kompeten dan berdaya saing global.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ───── PROGRAM ───── -->
+    <section id="program" class="program-section section-wrapper">
+        <div class="container">
+            <div class="section-title-block reveal">
+                <div class="section-eyebrow">Mengapa TEFA?</div>
+                <h2 class="section-heading">Tentang Program TEFA</h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">TEFA SMKN 1 Gondang Nganjuk mengintegrasikan proses produksi ke dalam kurikulum. Siswa belajar sambil bekerja pada unit produksi nyata untuk pengalaman kerja yang sesungguhnya.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 reveal">
+                    <div class="program-card shimmer-card">
+                        <div class="program-icon program-icon-1">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h5 class="program-card-title">Bagi Siswa</h5>
+                        <p>Pengalaman kerja riil, peningkatan kompetensi, dan peluang membangun portofolio profesional yang siap bersaing di dunia industri.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal reveal-delay-1">
+                    <div class="program-card shimmer-card">
+                        <div class="program-icon program-icon-2">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h5 class="program-card-title">Bagi Sekolah</h5>
+                        <p>Menjadi sumber pendapatan alternatif dan peningkatan kualitas pembelajaran secara holistik dan berkelanjutan.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal reveal-delay-2">
+                    <div class="program-card shimmer-card">
+                        <div class="program-icon program-icon-3">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h5 class="program-card-title">Bagi Industri</h5>
+                        <p>Memperoleh input tenaga kerja terlatih dan membangun kemitraan strategis yang saling menguntungkan jangka panjang.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ───── JURUSAN ───── -->
+    <section id="jurusan" class="jurusan-section">
+        <div class="container">
+            <div class="section-title-block reveal">
+                <div class="section-eyebrow">Unit Unggulan</div>
+                <h2 class="section-heading">Unit Produksi & Jurusan</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- Teknologi -->
+            <div class="jurusan-category-header reveal">
+                <div class="jurusan-category-icon cat-tech">
+                    <i class="fas fa-cogs" style="color:white; font-size:1.1rem"></i>
+                </div>
+                <h3 class="jurusan-category-title">A. Bidang Teknologi & Rekayasa</h3>
+            </div>
+            <div class="row g-4 mb-5">
+                <div class="col-md-4 reveal">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__22__jpg.jpeg" class="jurusan-card-img" alt="TEFA TKJ">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Computer & Network Solution (TKJ)</h5>
+                            <p class="jurusan-card-text"><strong>Layanan:</strong> Perakitan PC, instalasi jaringan LAN/Wi-Fi, maintenance server, repair laptop.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal reveal-delay-1">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__33__jpg.jpeg" class="jurusan-card-img" alt="TEFA TKR">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Auto Service (TKR)</h5>
+                            <p class="jurusan-card-text"><strong>Layanan:</strong> Servis berkala, tune-up, perbaikan mesin, perawatan rem & suspensi kendaraan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal reveal-delay-2">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__77__jpg.jpeg" class="jurusan-card-img" alt="TEFA TSM">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Motor Workshop (TSM)</h5>
+                            <p class="jurusan-card-text"><strong>Layanan:</strong> Servis motor, perbaikan engine, perawatan CVT, kelistrikan sepeda motor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agribisnis -->
+            <div class="jurusan-category-header reveal mt-5">
+                <div class="jurusan-category-icon cat-agri">
+                    <i class="fas fa-leaf" style="color:white; font-size:1.1rem"></i>
+                </div>
+                <h3 class="jurusan-category-title">B. Bidang Agribisnis & Agroteknologi</h3>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 reveal">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__55__jpg.jpeg" class="jurusan-card-img" alt="TEFA ATPH">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Farm & Nursery (ATPH)</h5>
+                            <p class="jurusan-card-text">Pembibitan tanaman pangan & hortikultura, pupuk organik, konsultasi pertanian.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal reveal-delay-1">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__44__jpg.jpeg" class="jurusan-card-img" alt="TEFA APHP">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Agro-Industry (APHP)</h5>
+                            <p class="jurusan-card-text">Produksi olahan pangan, pelatihan pengolahan hasil pertanian berkualitas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal reveal-delay-2">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__66__jpg.jpeg" class="jurusan-card-img" alt="TEFA Unggas">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Poultry Farm (Unggas)</h5>
+                            <p class="jurusan-card-text">Penjualan telur & daging ayam, vaksinasi, konsultasi kesehatan unggas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal reveal-delay-3">
+                    <div class="jurusan-card shimmer-card">
+                        <div class="jurusan-card-img-wrap">
+                            <img src="foto__11__jpg.jpeg" class="jurusan-card-img" alt="TEFA Mekanisasi">
+                        </div>
+                        <div class="jurusan-card-body">
+                            <h5 class="jurusan-card-title">Gondang Agri-Tech Center</h5>
+                            <p class="jurusan-card-text">Service traktor & alat mesin pertanian, modifikasi alat pertanian modern.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ───── GALERI ───── -->
+    <section id="galeri" class="galeri-section">
+        <div class="container">
+            <div class="section-title-block reveal">
+                <div class="section-eyebrow">Dokumentasi</div>
+                <h2 class="section-heading">Galeri Kegiatan TEFA</h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Dokumentasi aktivitas siswa dan produk di berbagai unit TEFA SMKN 1 Gondang Nganjuk.</p>
+            </div>
+            <div class="gallery-grid reveal">
+                <div class="gallery-item">
+                    <img src="foto__55__jpg.jpeg" alt="Kegiatan ATPH">
+                    <div class="gallery-overlay"><span>Farm & Nursery ATPH</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="foto__33__jpg.jpeg" alt="Kegiatan TKR">
+                    <div class="gallery-overlay"><span>Auto Service TKR</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="foto__44__jpg.jpeg" alt="Kegiatan APHP">
+                    <div class="gallery-overlay"><span>Agro-Industry APHP</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="foto__77__jpg.jpeg" alt="Kegiatan TSM">
+                    <div class="gallery-overlay"><span>Motor Workshop TSM</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="foto__66__jpg.jpeg" alt="Kegiatan Unggas">
+                    <div class="gallery-overlay"><span>Poultry Farm</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="foto__22__jpg.jpeg" alt="Kegiatan TKJ">
+                    <div class="gallery-overlay"><span>Computer & Network TKJ</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ───── KONTAK ───── -->
+    <section id="kontak" class="kontak-section">
+        <div class="container">
+            <div class="section-title-block reveal">
+                <div class="section-eyebrow">Hubungi Kami</div>
+                <h2 class="section-heading">Informasi Kontak</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-5 reveal">
+                    <div class="kontak-card">
+                        <h4 class="kontak-title">SMK Negeri 1 Gondang</h4>
+                        <p class="kontak-subtitle">Nganjuk, Jawa Timur</p>
+
+                        <div class="kontak-item">
+                            <div class="kontak-icon"><i class="fas fa-map-marker-alt" style="color:white"></i></div>
+                            <div class="kontak-item-text">JL. Raya Gondang-Lengkong, Balongrejo, Balong Gebang, Kec. Gondang, Kab. Nganjuk, Jawa Timur. 64451.</div>
+                        </div>
+                        <div class="kontak-item">
+                            <div class="kontak-icon"><i class="fas fa-phone" style="color:white"></i></div>
+                            <div class="kontak-item-text">(0358) 611 606</div>
+                        </div>
+                        <div class="kontak-item">
+                            <div class="kontak-icon"><i class="fas fa-envelope" style="color:white"></i></div>
+                            <div class="kontak-item-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddaeb0b6b3ecbab2b3b9bcb3ba9da4bcb5b2b2f3beb2f3b4b9">[email&#160;protected]</a></div>
+                        </div>
+                        <div class="kontak-item">
+                            <div class="kontak-icon"><i class="fab fa-instagram" style="color:white"></i></div>
+                            <div class="kontak-item-text">
+                                <a href="https://www.instagram.com/smknegeri1gondangnganjuk/" target="_blank">@smknegeri1gondangnganjuk</a>
+                            </div>
+                        </div>
+
+                        <div class="footer-social mt-4">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/smknegeri1gondangnganjuk/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 reveal reveal-delay-1">
+                    <div class="map-wrapper">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.267315473876!2d112.0807379757454!3d-7.435629673259365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e783f7346360a09%3A0x416401892131440!2sSMK%20Negeri%201%20Gondang!5e0!3m2!1sid!2sid!4v1715670000000!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ───── FOOTER ───── -->
+    <footer>
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-5">
+                    <div class="footer-brand">TEFA SMKN 1 Gondang</div>
+                    <p class="footer-desc">Teaching Factory SMK Negeri 1 Gondang Nganjuk — Mempersiapkan generasi unggul yang siap bersaing di era industri global.</p>
+                </div>
+                <div class="col-lg-4 offset-lg-3">
+                    <p style="font-family:'Cinzel',serif; font-size:0.85rem; color: var(--text-muted); margin-bottom:14px; letter-spacing:0.1em;">NAVIGASI CEPAT</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul style="list-style:none; padding:0; font-size:0.83rem; line-height:2.2;">
+                                <li><a href="#beranda" style="color:var(--text-muted); text-decoration:none">Beranda</a></li>
+                                <li><a href="#visi-misi" style="color:var(--text-muted); text-decoration:none">Visi & Misi</a></li>
+                                <li><a href="#program" style="color:var(--text-muted); text-decoration:none">Program TEFA</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul style="list-style:none; padding:0; font-size:0.83rem; line-height:2.2;">
+                                <li><a href="#jurusan" style="color:var(--text-muted); text-decoration:none">Unit TEFA</a></li>
+                                <li><a href="#galeri" style="color:var(--text-muted); text-decoration:none">Galeri</a></li>
+                                <li><a href="#kontak" style="color:var(--text-muted); text-decoration:none">Kontak</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copy d-flex justify-content-between flex-wrap gap-2">
+                <span>© 2025 TEFA SMK Negeri 1 Gondang Nganjuk. All rights reserved.</span>
+                <span style="color:var(--purple-light);">✦ Unggul · Terampil · Berdaya Saing ✦</span>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ─── Cursor Glow ───
+        const cursor = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // ─── Particles ───
+        const bg = document.getElementById('particles-bg');
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+            p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+            p.style.animationDelay = (Math.random() * 20) + 's';
+            if (Math.random() > 0.6) {
+                p.style.background = '#c9a227';
+                p.style.boxShadow = '0 0 4px #c9a227';
+            } else {
+                p.style.boxShadow = '0 0 4px #b44dff';
+            }
+            bg.appendChild(p);
+        }
+
+        // ─── Navbar scroll effect ───
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNavbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+            // Active nav link
+            const sections = document.querySelectorAll('section[id], header[id]');
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 100) current = s.id;
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+
+        // ─── Reveal on scroll ───
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ─── Smooth navbar links ───
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile nav
+                    const collapse = document.getElementById('navb
